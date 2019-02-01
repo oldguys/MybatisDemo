@@ -12,15 +12,15 @@
 
 基于MyBatis 思想，可以把 Entity 与 Mapper 之间的关系模板化。
 
-![关系图.png](https://upload-images.jianshu.io/upload_images/14387783-b2180a165ec7398c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![关系图.png](https://raw.githubusercontent.com/oldguys/MybatisDemo/master/image/关系图.png)
 
 实现动态建表的核心其实很简单，类图如下
 
-![核心类图.png](https://upload-images.jianshu.io/upload_images/14387783-f58a00ae0f667271.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![核心类图.png](https://raw.githubusercontent.com/oldguys/MybatisDemo/master/image/核心类图.png)
 
 所有类的关系图
 
-![所有类图.png](https://upload-images.jianshu.io/upload_images/14387783-bf53d5602c1fa8ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![所有类图.png](https://raw.githubusercontent.com/oldguys/MybatisDemo/master/image/所有类图.png)
 
 
 由于使用Thymeleaf所以需要引入Maven
