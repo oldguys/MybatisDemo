@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仓库</title>
+    <span th:include="commons/templates :: common-css-js"></span>
+    <span th:include="commons/templates :: init-menu"></span>
+    <span th:include="commons/templates :: bootstrap-table"></span>
+</head>
+<body>
+<div th:replace="commons/templates :: header"></div>
+<div class="container">
+    <h3>仓库</h3>
+    <hr>
+    <table id="records-info"></table>
+</div>
+</body>
+<script th:inline="text">
+    $('#records-info').bootstrapTable({
+        url: "[[@{/Store/page}]]",//请求数据url
+        showRefresh: true,
+        smartDisplay: true,
+        showToggle: true,
+        // showExport:true,
+        paginationPreText: '上一页',
+        paginationNextText: '下一页',
+        pagination: true,//分页
+        sidePagination: 'server',//服务器端分页
+        paginationVAlign: 'bottom',
+        pageNumber: 1,
+        pageSize: 30,
+        pageList: [10, 20, 30, 50, 'all'],//分页步进值
+        search: true, //显示搜索框
+//        striped: true,
+        queryParams: function (params) {
+
+            params['size'] = params['limit'];
+            params['current'] = (params['offset'] + params['limit']) / params['limit'];
+            params['queryText'] = params['search'];
+            params['sortColumn'] = params['sort'];
+            params['sort'] = null;
+
+            return params;
+        },
+        columns: [
+            {
+                field: 'id',
+                title: '编号',
+            },
+            {
+                field: 'name',
+                title: '名称',
+            },
+            {
+                field: 'sequence',
+                title: '序列号',
+            },
+            {
+                field: 'sequenceList',
+                title: '序列号集合',
+                width: '300px'
+            },
+            {
+                field: 'createTime',
+                title: '创建时间',
+            },
+            {
+                title: '编辑',
+                formatter: function (value, row, index) { // 单元格格式化函数
+
+                    var id = row['id'];
+                    var str = '<div class="btn-group"> ' +
+                        ' <button class="btn btn-default btn-edit" title="详情"' +
+                        'data-toggle="tooltip" data-placement="left" data-value="' + id + '" >  ' +
+                        '  <i class="glyphicon glyphicon-pencil"></i>  ' +
+                        ' </button>  ' +
+                        ' </div>  ';
+
+                    return str;
+                }
+            },
+        ]
+    })
+</script>
+</html>

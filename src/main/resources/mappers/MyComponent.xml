@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oldguy.example.modules.modal.dao.jpas.MyComponentMapper">
+
+    <sql id="table_name">my_component</sql>
+
+    <sql id="all_entity_columns">
+		${prefix}.id,
+        ${prefix}.`name`,
+        ${prefix}.sequence,
+        ${prefix}.computer_sequence,
+        ${prefix}.brand_sequence,
+        ${prefix}.modal_sequence,
+        ${prefix}.create_time,
+        ${prefix}.`status`
+	</sql>
+
+    <select id="findOne" parameterType="long" resultType="MyComponent">
+        SELECT
+        <include refid="all_entity_columns">
+            <property name="prefix" value="a"/>
+        </include>
+        FROM
+        <include refid="table_name"/>
+        a
+        WHERE
+        a.id = #{id}
+    </select>
+
+    <select id="findAllByStatus" parameterType="int" resultType="MyComponent">
+        SELECT
+        <include refid="all_entity_columns">
+            <property name="prefix" value="a"/>
+        </include>
+        FROM
+        <include refid="table_name"/>
+        a
+        <where>
+            <choose>
+                <when test="status != null">
+                    a.`status` = #{status}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <update id="update" parameterType="MyComponent">
+        UPDATE
+        <include refid="table_name"/>
+        SET
+        `name`=#{name},
+        sequence=#{sequence},
+        computer_sequence=#{computerSequence},
+        modal_sequence=#{modalSequence},
+        brand_sequence=#{brandSequence},
+        create_time=#{createTime},
+        `status`=#{status}
+        WHERE
+        id = #{id}
+    </update>
+
+
+    <update id="updateStatus">
+        UPDATE
+        <include refid="table_name"/>
+        SET
+        a.`status` = #{status}
+        WHERE
+        a.id = #{id}
+    </update>
+
+
+    <insert id="save" parameterType="MyComponent" keyProperty="id" useGeneratedKeys="true">
+        INSERT
+        <include refid="table_name"/>
+        (
+        `name`,
+        sequence,
+        computer_sequence,
+        brand_sequence,
+        modal_sequence,
+        create_time,
+        `status`
+        )
+        VALUES (
+        #{name},
+        #{sequence},
+        #{computerSequence},
+        #{brandSequence},
+        #{modalSequence},
+        #{createTime},
+        #{status}
+        )
+    </insert>
+
+    <insert id="saveBatch" parameterType="MyComponent" keyProperty="id" useGeneratedKeys="true">
+        INSERT
+        <include refid="table_name"/>
+        (
+        `name`,
+        sequence,
+        computer_sequence,
+        brand_sequence,
+        modal_sequence,
+        create_time,
+        `status`
+        )
+        VALUES
+        <foreach collection="collections" item="item" separator=",">
+            (
+            #{item.name},
+            #{item.sequence},
+            #{item.computerSequence},
+            #{item.brandSequence},
+            #{item.modalSequence},
+            #{item.createTime},
+            #{item.status}
+            )
+        </foreach>
+
+    </insert>
+
+</mapper>

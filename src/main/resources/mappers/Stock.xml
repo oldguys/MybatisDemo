@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oldguy.example.modules.modal.dao.jpas.StockMapper">
+
+    <sql id="table_name">stock</sql>
+
+    <sql id="all_entity_columns">
+        ${prefix}.id,
+        ${prefix}.`type`,
+        ${prefix}.store_sequence,
+        ${prefix}.sequence,
+        ${prefix}.create_time,
+        ${prefix}.`status`
+    </sql>
+
+    <select id="findByPage" resultType="com.oldguy.example.modules.modal.dto.json.StockInfo">
+        SELECT
+        <include refid="all_entity_columns">
+            <property name="prefix" value="a"/>
+        </include>
+        ,b.typeName
+        ,b.componentName
+        ,b.computerName
+        ,b.brand_sequence
+        ,b.modal_sequence
+        ,b.entityId
+        ,c.`name` modalName
+        ,d.`name` brandName
+        ,e.`name` storeName
+        FROM
+        <include refid="table_name"/> a
+        LEFT JOIN (
+        SELECT
+        'Computer' type,
+        '主机' typeName,
+        sequence,
+        `name` computerName,
+        brand_sequence,
+        modal_sequence,
+        '' componentName,
+        id entityId
+        FROM
+        computer
+        UNION
+        SELECT
+        'MyComponent' type,
+        '配件' typeName,
+        a.sequence,
+        b.`name` computerName,
+        a.brand_sequence,
+        a.modal_sequence,
+        a.`name` componentName,
+        a.id entityId
+        FROM
+        my_component a
+        LEFT JOIN computer b ON a.computer_sequence = b.sequence
+        ) b ON a.sequence = b.sequence AND a.type = b.type
+        LEFT JOIN modal c ON b.modal_sequence = c.sequence
+        LEFT JOIN brand d ON b.brand_sequence = d.sequence
+        LEFT JOIN store e ON a.store_sequence = e.sequence
+        <where>
+            <if test="form.status != null">
+                AND a.`status` = #{form.status}
+            </if>
+            <if test="form.startTime != null ">
+                AND a.create_time &gt; #{form.startTime}
+            </if>
+            <if test="form.endTime != null ">
+                AND a.create_time &lt; #{form.endTime}
+            </if>
+            <if test="form.queryText != null and !&quot;&quot;.equals(form.queryText.toString().trim())">
+                AND (
+                b.typeName LIKE CONCAT('%',#{form.queryText},'%')
+                OR b.componentName LIKE CONCAT('%',#{form.queryText},'%')
+                OR b.computerName LIKE CONCAT('%',#{form.queryText},'%')
+                OR b.brand_sequence LIKE CONCAT('%',#{form.queryText},'%')
+                OR b.modal_sequence LIKE CONCAT('%',#{form.queryText},'%')
+                OR a.sequence LIKE CONCAT('%',#{form.queryText},'%')
+                OR c.`name` LIKE CONCAT('%',#{form.queryText},'%')
+                OR d.`name` LIKE CONCAT('%',#{form.queryText},'%')
+                OR e.`name` LIKE CONCAT('%',#{form.queryText},'%')
+                )
+            </if>
+        </where>
+        ORDER BY
+        <choose>
+            <when test="form.sort != null and form.sort == 1">
+                 a.id DESC
+            </when>
+            <when test="form.sort != null and form.sort == 0">
+                a.id ASC
+            </when>
+            <otherwise>
+                a.id DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findOne" parameterType="long" resultType="Stock">
+        SELECT
+        <include refid="all_entity_columns">
+            <property name="prefix" value="a"/>
+        </include>
+        FROM
+        <include refid="table_name"/>
+        a
+        WHERE
+        a.id = #{id}
+    </select>
+
+    <select id="findAllByStatus" parameterType="int" resultType="Stock">
+        SELECT
+        <include refid="all_entity_columns">
+            <property name="prefix" value="a"/>
+        </include>
+        FROM
+        <include refid="table_name"/>
+        a
+        <where>
+            <choose>
+                <when test="status != null">
+                    a.`status` = #{status}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <update id="update" parameterType="Stock">
+        UPDATE
+        <include refid="table_name"/>
+        SET
+        `type`=#{type},
+        store_sequence=#{storeSequence},
+        sequence=#{sequence},
+        create_time=#{createTime},
+        `status`=#{status}
+        WHERE
+        id = #{id}
+    </update>
+
+
+    <update id="updateStatus">
+        UPDATE
+        <include refid="table_name"/>
+        SET
+        a.`status` = #{status}
+        WHERE
+        a.id = #{id}
+    </update>
+
+
+    <insert id="save" parameterType="Stock" keyProperty="id" useGeneratedKeys="true">
+        INSERT
+        <include refid="table_name"/>
+        (
+        `type`,
+        store_sequence,
+        sequence,
+        create_time,
+        `status`
+        )
+        VALUES (
+        #{type},
+        #{storeSequence},
+        #{sequence},
+        #{createTime},
+        #{status}
+        )
+    </insert>
+
+    <insert id="saveBatch" parameterType="Stock" keyProperty="id" useGeneratedKeys="true">
+        INSERT
+        <include refid="table_name"/>
+        (
+        `type`,
+        store_sequence,
+        sequence,
+        create_time,
+        `status`
+        )
+        VALUES
+        <foreach collection="collections" item="item" separator=",">
+            (
+            #{item.type},
+            #{item.storeSequence},
+            #{item.sequence},
+            #{item.createTime},
+            #{item.status}
+            )
+        </foreach>
+
+    </insert>
+
+</mapper>

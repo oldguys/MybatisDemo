@@ -1,0 +1,29 @@
+package com.oldguy.example.modules.modal.controllers;
+
+import com.oldguy.example.modules.modal.dao.entities.Computer;
+import com.oldguy.example.modules.modal.dao.entities.MyComponent;
+import com.oldguy.example.modules.modal.dao.jpas.MyComponentMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * @author huangrenhao
+ * @date 2019/1/10
+ */
+@RestController
+@RequestMapping("MyComponent")
+public class MyComponentController {
+
+    @Autowired
+    private MyComponentMapper myComponentMapper;
+
+    @GetMapping("all")
+    public List<MyComponent> getList(Integer status) {
+        return myComponentMapper.findAllByStatus(status);
+    }
+
+}

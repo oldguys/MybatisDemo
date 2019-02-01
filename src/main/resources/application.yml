@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/mybatis_demo?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+  mvc:
+    date-format: yyyy-MM-dd
+  thymeleaf:
+    cache: false
+mybatis:
+  config-location: classpath:configs/myBatis-config.xml
+  type-aliases-package: com.oldguy.example.modules.modal.dao
+  mapper-locations: classpath:mappers/*.xml
+  template-location: configs/mapper/mybatis-template.xml
+  application-location: F://workspace//java//idea//MyBatisDemo
+  mapper-generate-config-location: configs/mapper/mybatis-mapper-generate-config.perporties
+server:
+  port: 8082
+
+
+

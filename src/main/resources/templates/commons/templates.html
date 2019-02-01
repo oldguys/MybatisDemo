@@ -1,0 +1,89 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/webModel">
+<meta charset="UTF-8">
+<!-- 通用头 -->
+<div th:fragment="header">
+<nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><b>通讯录管理系统</b></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="menu-item"><a th:href="@{/view/Stock/page}">库存</a></li>
+            <li class="menu-item"><a th:href="@{/view/Store/page}">仓库</a></li>
+            <li class="dropdown menu-item">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                基本信息
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="menu-item"><a th:href="@{/view/Computer/page}">主机</a></li>
+                <li class="menu-item"><a th:href="@{/view/MyComponent/page}">配件</a></li>
+                <li class="menu-item"><a th:href="@{/view/Brand/page}">品牌</a></li>
+                <li class="menu-item"><a th:href="@{/view/Modal/page}">系列</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <br><br><br>
+</div>
+
+<div th:fragment="init-menu">
+  <script>
+      $(function () {
+          var items = $(".menu-item");
+          for (var i = 0; i < items.length; i++) {
+              var item = $(items[i]);
+              var itemText = $(item.find("a")).text();
+
+              if (itemText == $("title").text()) {
+                  item.addClass("active");
+              } else {
+                  item.removeClass("active");
+              }
+          }
+      });
+  </script>
+</div>
+
+<div th:fragment="common-css-js">
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script th:src="@{/js/jquery-2.1.0.min.js}"></script>
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+</div>
+
+<div th:fragment="bootstrap-treeview">
+<!--  <link href="https://cdn.bootcss.com/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css" rel="stylesheet">-->
+<!--  <script th:src="@{/plugins/treeview/bootstrap-treeview.js}"></script>-->
+  <script src="https://cdn.bootcss.com/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
+</div>
+
+<div th:fragment="bootstrap-table">
+  <link th:href="@{/plugins/table/bootstrap-table.css}" rel="stylesheet">
+  <script th:src="@{/plugins/table/bootstrap-table.js}"></script>
+  <script th:src="@{/plugins/table/bootstrap-table-export.js}"></script>
+  <script th:src="@{/plugins/table/bootstrap-table-filter.js}"></script>
+  <script th:src="@{/plugins/table/bootstrap-table-zh-CN.js}"></script>
+</div>
+
+<div th:fragment="bootstrap-fileinput">
+  <link th:href="@{/plugins/fileinput/bootstrap-fileinput.min.css}" rel="stylesheet">
+  <script th:src="@{/plugins/fileinput/bootstrap-fileinput.min.js}"></script>
+  <script th:src="@{/plugins/fileinput/bootstrap-fileinput.zh-CN.js}"></script>
+</div>
+
+<div th:fragment="wangEditor">
+  <link th:href="@{/plugins/wangeditor/wangEditor.css}" rel="stylesheet">
+  <script th:src="@{/plugins/wangeditor/wangEditor.min.js}"></script>
+</div>
+</html>
