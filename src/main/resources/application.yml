@@ -17,7 +17,8 @@ mybatis:
   type-aliases-package: com.oldguy.example.modules.modal.dao
   mapper-locations: classpath:mappers/*.xml
   template-location: configs/mapper/mybatis-template.xml
-  application-location: F://workspace//java//idea//MyBatisDemo
+#  application-location: F://workspace//java//idea//MyBatisDemo
+  application-location: D:\\workspace\\history\\idea\\MyBatisDemo
   mapper-generate-config-location: configs/mapper/mybatis-mapper-generate-config.perporties
 server:
   port: 8082

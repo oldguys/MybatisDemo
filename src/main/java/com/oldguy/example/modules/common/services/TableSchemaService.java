@@ -5,10 +5,7 @@ import com.oldguy.example.modules.common.annotation.Entity;
 import com.oldguy.example.modules.common.dto.db.SqlTableObject;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,6 +66,16 @@ public class TableSchemaService {
         // 配置字段
         List<Field> fields = new ArrayList<>();
         getAllDeclareFields(clazz, fields);
+
+        // 移除忽略
+        List<Field> hasRemoveFields = new ArrayList<>();
+        fields.forEach(field -> {
+            if (field.isAnnotationPresent(Transient.class)) {
+                hasRemoveFields.add(field);
+            }
+        });
+        fields.removeAll(hasRemoveFields);
+
         setTableColumns(obj, fields);
         return obj;
     }
@@ -122,6 +129,7 @@ public class TableSchemaService {
                 columnList.add(column);
             }
         }
+
         obj.setColumns(columnList);
     }
 

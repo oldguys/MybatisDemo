@@ -7,6 +7,7 @@ import com.oldguy.example.modules.common.utils.ThymeleafUtils;
 import org.springframework.util.StringUtils;
 import org.thymeleaf.context.Context;
 
+import javax.persistence.Transient;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
