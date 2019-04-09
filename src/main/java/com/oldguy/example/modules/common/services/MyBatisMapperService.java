@@ -1,5 +1,6 @@
 package com.oldguy.example.modules.common.services;
 
+import com.oldguy.example.modules.common.annotation.AssociateEntity;
 import com.oldguy.example.modules.common.dto.db.MyBatisMapperData;
 import com.oldguy.example.modules.common.dto.db.SqlTableObject;
 import com.oldguy.example.modules.common.utils.ReflectUtils;
@@ -31,6 +32,11 @@ public class MyBatisMapperService {
     public static Map<String, String> trainToMapperContext(List<SqlTableObject> tables, String classpath) {
         Map<String, String> map = new HashMap<>(tables.size());
         for (SqlTableObject table : tables) {
+
+            if(table.getTargetClass().isAnnotationPresent(AssociateEntity.class)){
+                continue;
+            }
+
             Context context = trainToContext(trainFormTableObject(table));
             String mapperContext = ThymeleafUtils.processXML(classpath, context);
             map.put(table.getTargetClass().getSimpleName(), mapperContext);
