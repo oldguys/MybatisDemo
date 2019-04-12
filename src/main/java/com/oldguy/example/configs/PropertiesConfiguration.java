@@ -3,6 +3,7 @@ package com.oldguy.example.configs;
 import com.oldguy.example.modules.common.services.DbRegister;
 import com.oldguy.example.modules.common.utils.Log4jUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ResourceUtils;
 

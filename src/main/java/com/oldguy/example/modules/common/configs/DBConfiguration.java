@@ -1,4 +1,4 @@
-package com.oldguy.example.configs;
+package com.oldguy.example.modules.common.configs;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;

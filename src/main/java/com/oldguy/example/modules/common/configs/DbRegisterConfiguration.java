@@ -1,4 +1,4 @@
-package com.oldguy.example.configs;
+package com.oldguy.example.modules.common.configs;
 
 import com.oldguy.example.modules.common.dto.db.DbRegisterProperties;
 import com.oldguy.example.modules.common.services.DbRegister;
