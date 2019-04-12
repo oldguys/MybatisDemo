@@ -3,7 +3,7 @@
 > 之前已经实现了 自动建表，但是仅实现了自动建表功能，而Mybatis还有 Mapper.xml 文件。所以本文将 描述如何使用 通用的Mapper模板，动态生成Mapper.xml
 > 并且本文会将原本的代码进行规范。
 >
-> GitHub  [https://github.com/oldguys/ShiroDemo](https://github.com/oldguys/ShiroDemo)
+> GitHub  [https://github.com/oldguys/MybatisDemo](https://github.com/oldguys/MybatisDemo)
 
 设计思路：
 1. 类似于Jpa的包扫描，发现实体，
